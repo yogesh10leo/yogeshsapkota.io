@@ -1,0 +1,89 @@
+<html>
+
+<head>
+<title>portfolio</title>
+<style>
+    .class1{
+        text-align: center;
+    }
+    .cointainer{
+      background-color: green;
+      width: 400px;
+      padding: 10px;
+
+    }
+</style>
+</head>
+<body>
+  
+    <div class="class1">
+        <img
+       id="image"
+        height="250"
+        width="250" style="margin-top: 50px;">
+    </div>
+       <div class="cointainer">
+
+        <h2 id="name"></h2>
+        <p id="bio"></p>
+     <h4 id="followers"></h4>
+        <a href="https://mail.google.com/mail/u/0/#inbox?compose=new">contact me</a><br>
+       <a  id="repos1"></a>
+       <a  id="repos2"></a>
+      
+       </div>
+<script>
+    fetch("https://api.github.com/users/yogesh10leo").then
+    (response=>response.json())
+    .then(function(data){
+        console.log(data)
+
+       let followersCount = data['followers']
+       let followersInfo = `followers: ${followersCount}`
+       let nameCount = data['name']
+       let nameInfo = `hi i'm ${nameCount}`
+
+        document.getElementById('image').src=data['avatar_url']
+        document.getElementById('name').textContent=nameInfo
+        document.getElementById('bio').textContent=data['bio']
+        document.getElementById('followers').textContent=followersInfo
+       
+        
+        
+             
+            
+    })
+    fetch ("https://api.github.com/users/yogesh10leo/repos")
+            .then(response=>response.json())
+            .then (function(data){
+                console.log(data[0])
+                console.log(data[1])
+                
+              
+
+                arr=[]
+                for (var i=0;i<data.length;i++){
+                arr.push(data[i]['name'])}
+                document.getElementById('repos1').textContent=arr
+                document.getElementById('repos2').textContent=arr
+                
+
+              
+              arr2=[]
+              for(var i=0;i<data.length;i++){
+                  arr2.push(data[i]['html_url'])
+              }
+              document.getElementById('repos1').href=arr2[0]
+              document.getElementById('repos2').href=arr2[1]
+             
+             
+
+             
+            })
+    
+
+</script>
+
+
+</body>
+</html>
